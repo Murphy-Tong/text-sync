@@ -517,29 +517,18 @@ onUnmounted(() => {
 .app-container {
   min-height: 100vh;
   background-color: #f5f7fa;
+  overflow-x: hidden;
+  width: 100%;
 }
 
-.el-header {
-  background-color: #fff;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-  position: sticky;
-  top: 0;
-  z-index: 100;
+.el-container {
+  width: 100%;
+  overflow-x: hidden;
 }
 
-.header-content {
-  max-width: 1400px;
-  margin: 0 auto;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.header-content h1 {
-  margin: 0;
-  font-size: 1.5rem;
-  color: #409EFF;
+.el-main {
+  overflow-x: hidden;
+  width: 100%;
 }
 
 .content-container {
@@ -548,6 +537,8 @@ onUnmounted(() => {
   padding: 20px;
   display: flex;
   gap: 20px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .main-content {
@@ -615,6 +606,8 @@ onUnmounted(() => {
 
 .content-wrapper {
   padding: 16px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .text {
@@ -626,6 +619,8 @@ onUnmounted(() => {
   border-radius: 4px;
   transition: background-color 0.2s;
   margin-bottom: 12px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .content-footer {
@@ -770,16 +765,20 @@ onUnmounted(() => {
   .el-container {
     margin: 0;
     padding: 0;
+    width: 100%;
   }
 
   .el-main {
     padding: 0;
+    width: 100%;
   }
 
   .content-container {
     flex-direction: column;
     padding: 12px;
     margin: 0;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .main-content {
@@ -787,60 +786,67 @@ onUnmounted(() => {
     width: 100%;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
   }
 
   .input-section {
     position: static;
     margin: 0 0 12px 0;
     width: 100%;
+    box-sizing: border-box;
   }
 
   .content-list {
     margin: 0;
     width: 100%;
-  }
-
-  .header-content {
-    padding: 0 12px;
-    flex-direction: column;
-    gap: 10px;
-    margin: 0;
-  }
-
-  .header-actions {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin: 0;
-  }
-
-  .header-actions .el-button,
-  .header-actions .el-popconfirm {
-    width: 100%;
+    box-sizing: border-box;
   }
 
   .content-items {
     gap: 12px;
+    width: 100%;
+  }
+
+  .content-item {
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .content-wrapper {
     padding: 12px;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .text {
     padding: 6px;
     margin-bottom: 8px;
+    width: 100%;
+    box-sizing: border-box;
   }
 
-  .content-footer {
-    margin-top: 6px;
+  .image-content .el-image {
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .side-section.mobile {
     width: 100%;
     margin: 12px 0 0 0;
     padding: 0;
+    box-sizing: border-box;
+  }
+
+  .mobile-users {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .header-content {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 12px;
   }
 }
 
