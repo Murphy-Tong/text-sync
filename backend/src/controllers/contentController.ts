@@ -79,4 +79,17 @@ export const deleteContent = async (req: Request<{ id: string }>, res: Response)
   } catch (error) {
     res.status(500).json({ message: error instanceof Error ? error.message : '未知错误' });
   }
+};
+
+// 清空所有内容
+export const clearAllContents = async (req: Request, res: Response): Promise<void> => {
+  try {
+    await storage.clearAllContents();
+    
+    // 通知所有客户端清空内容
+    req.app.get('io').emit('sync-clear');
+    res.json({ message: '所有内容已清空' });
+  } catch (error) {
+    res.status(500).json({ message: error instanceof Error ? error.message : '未知错误' });
+  }
 }; 

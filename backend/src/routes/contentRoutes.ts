@@ -15,4 +15,7 @@ router.post('/image', contentController.upload.single('image'), contentControlle
 // 删除内容
 router.delete('/:id', contentController.deleteContent);
 
+// 清空所有内容
+router.delete('/', contentController.clearAllContents);
+
 export default router; 

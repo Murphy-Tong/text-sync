@@ -39,9 +39,47 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api/content', contentRoutes);
 app.use('/api/network', networkRoutes);
 
+// 在线用户管理
+interface OnlineUser {
+  id: string;
+  joinTime: Date;
+  socketId: string;
+  deviceInfo: string;
+  ip: string;
+}
+
+const onlineUsers = new Map<string, OnlineUser>();
+
+// 获取客户端 IP 地址
+const getClientIp = (socket: any) => {
+  const clientIp = socket.handshake.headers['x-forwarded-for'] || 
+                  socket.handshake.address || 
+                  socket.request.connection.remoteAddress;
+                  
+  // 如果是 IPv6 格式的 IPv4 地址，提取 IPv4 部分
+  if (clientIp.substr(0, 7) === '::ffff:') {
+    return clientIp.substr(7);
+  }
+  return clientIp;
+};
+
 // Socket.io 连接处理
 io.on('connection', (socket) => {
   console.log('A user connected');
+
+  socket.on('user-join', (data: { id: string; deviceInfo: string }) => {
+    const user: OnlineUser = {
+      id: data.id,
+      deviceInfo: data.deviceInfo,
+      joinTime: new Date(),
+      socketId: socket.id,
+      ip: getClientIp(socket)
+    };
+    onlineUsers.set(socket.id, user);
+    
+    // 广播用户列表更新
+    io.emit('users-update', Array.from(onlineUsers.values()));
+  });
 
   socket.on('sync-update', (data: unknown) => {
     // 广播更新给所有其他客户端
@@ -50,6 +88,10 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', () => {
     console.log('User disconnected');
+    // 移除用户
+    onlineUsers.delete(socket.id);
+    // 广播用户列表更新
+    io.emit('users-update', Array.from(onlineUsers.values()));
   });
 });
 

@@ -58,4 +58,9 @@ export async function deleteContent(id: string): Promise<boolean> {
   
   await saveContents(filteredContents);
   return true;
+}
+
+// 清空所有内容
+export async function clearAllContents(): Promise<void> {
+  await saveContents([]);
 } 
