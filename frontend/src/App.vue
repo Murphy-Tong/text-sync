@@ -31,20 +31,7 @@
           <div class="input-section" ref="inputSection">
             <div class="input-wrapper">
               <div class="input-header">
-                <el-upload
-                  class="image-uploader"
-                  action="/api/content/image"
-                  :show-file-list="false"
-                  :on-success="handleUploadSuccess"
-                  :on-error="handleUploadError"
-                  :before-upload="beforeUpload"
-                  name="image"
-                >
-                  <el-button type="success">
-                    <el-icon><Upload /></el-icon>
-                    上传图片
-                  </el-button>
-                </el-upload>
+                <FileUpload />
               </div>
               <el-input
                 v-model="textContent"
@@ -231,6 +218,7 @@ import QrcodeVue from 'qrcode.vue'
 import type { IContent } from '../../backend/src/types/content'
 import { API_BASE_URL, SOCKET_URL, getPageUrl } from './config'
 import { v4 as uuidv4 } from 'uuid'
+import FileUpload from './components/FileUpload.vue'
 
 // 判断是否为移动设备
 const isMobile = ref(false)
@@ -395,33 +383,6 @@ const downloadImage = async (url: string, filename: string) => {
     console.error('下载失败:', error)
     ElMessage.error(error.response?.data?.message || '下载失败，请稍后重试')
   }
-}
-
-// 处理图片上传成功
-const handleUploadSuccess = () => {
-  ElMessage.success('上传成功')
-}
-
-// 处理图片上传失败
-const handleUploadError = (err: any) => {
-  console.error('上传失败:', err)
-  ElMessage.error(`上传失败: ${err.response?.data?.message || err.message || '未知错误'}`)
-}
-
-// 上传前检查
-const beforeUpload = (file: File) => {
-  const isImage = file.type.startsWith('image/')
-  const isLt2M = file.size / 1024 / 1024 < 2
-
-  if (!isImage) {
-    ElMessage.error('只能上传图片文件')
-    return false
-  }
-  if (!isLt2M) {
-    ElMessage.error('图片大小不能超过 2MB')
-    return false
-  }
-  return true
 }
 
 // 删除内容

@@ -33,7 +33,13 @@ export default defineConfig(() => {
       proxy: {
         '/api': {
           target: `http://${localIP}:3000`,
-          changeOrigin: true
+          changeOrigin: true,
+          secure: false
+        },
+        '/uploads': {
+          target: `http://${localIP}:3000`,
+          changeOrigin: true,
+          secure: false
         }
       }
     },
